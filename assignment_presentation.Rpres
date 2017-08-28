@@ -1,0 +1,45 @@
+
+Developing Data Products: Customer Clustering
+========================================================
+author: Quan Luong
+date: 08/27/2017
+autosize: true
+
+Introduction
+========================================================
+
+This is the final assignment project for "Developing Data Products" held by Coursera and John Hopkins University. This assignment is the combination of Shiny and R presenter show a simple reactive cluster model.
+
+Brief discussion
+========================================================
+In this project, I am going to do clustering of customer groups based on the data of Wholesale Customers from https://archive.ics.uci.edu/ml/datasets/Wholesale+customers. 
+
+The data include regions of customers, channel (type) of customers and amount (mil. unit) of Fresh, Milk, Grocery, Frozen, Detergents_Paper, and Delicassen they bought. Based on these information, we can choose how many groups to cluster and which group each customer belongs to.
+
+
+A quick look at the data
+========================================================
+
+```{r}
+setwd("E:/Coursera/Course 7_Developing Data Products/Week4/project_final")
+customer_data <- read.csv("Wholesale customers data.csv", stringsAsFactors = F)
+summary(customer_data)
+```
+
+How a sample cluster would look like
+========================================================
+
+```{r, echo=FALSE}
+library(shiny)
+library(ggplot2)
+selectedData <- customer_data[, c("Fresh", "Milk")]
+clusters <- kmeans(selectedData, 3)
+ggplot(selectedData, aes(x = Fresh, y = Milk, color = factor(clusters$cluster))) + geom_point()
+
+```
+
+Shiny Reactive cluster
+========================================================
+Rather than previous static cluster, you can reactively choose number of clusters you want to see and which variables you take into account. This is what I've done thanks to R Shiny App with the link below:
+https://quanluong.shinyapps.io/project_final/
+
